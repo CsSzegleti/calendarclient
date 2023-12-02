@@ -10,11 +10,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 @JacksonXmlRootElement(localName = "propfind")
-public class Propfind {
-
-    private final String davXmlns = "DAV:";
-    private final String csXmlns = "http://calendarserver.org/ns/";
-
+public class Propfind extends XmlRootElement {
     @JsonIgnore
     private List<Property<?>> properties;
 
@@ -28,16 +24,6 @@ public class Propfind {
 
     public void addProperty(Property<?> property) {
         this.properties.add(property);
-    }
-
-    @JacksonXmlProperty(localName = "xmlns", isAttribute = true)
-    public String getDavXmlns() {
-        return davXmlns;
-    }
-
-    @JacksonXmlProperty(localName = "xmlns:cs", isAttribute = true)
-    public String getCsXmlns() {
-        return csXmlns;
     }
 
     @JacksonXmlProperty(localName = "prop")

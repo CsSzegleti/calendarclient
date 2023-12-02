@@ -16,9 +16,9 @@ public class CalendarController {
 
     private final CalendarClient client;
 
-    @GetMapping("/getCalendarInfo/{userName}")
-    public String getCalendarInfo(@PathVariable String userName) throws IOException, InterruptedException {
-        return client.getCalendarInfo(userName);
+    @GetMapping("/getCalendarInfo/{userName}/{calendarId}")
+    public String getCalendarInfo(@PathVariable String userName, @PathVariable String calendarId) throws IOException, InterruptedException {
+        return client.getCalendarInfo(userName, calendarId);
     }
     
 }
