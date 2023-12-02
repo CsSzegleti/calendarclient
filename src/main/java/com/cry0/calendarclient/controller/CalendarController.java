@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cry0.calendarclient.business.client.CalendarClient;
 
+import jakarta.xml.bind.JAXBException;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -17,7 +18,7 @@ public class CalendarController {
     private final CalendarClient client;
 
     @GetMapping("/getCalendar")
-    public String getCalendar(@RequestParam String calendarId) throws IOException, InterruptedException {
+    public String getCalendar(@RequestParam String calendarId) throws IOException, InterruptedException, JAXBException {
         return client.getCalendarInfo(calendarId);
     }
     
