@@ -22,11 +22,15 @@ public class Property<T> {
     private T value;
     private String nameSpace;
     
+    public Property() {
+    }
+
     Property(String name, T value, String nameSpace) {
         this.name = name;
         this.value = value;
         this.nameSpace = nameSpace;
     }
+    
     public String getName() {
         return name;
     }

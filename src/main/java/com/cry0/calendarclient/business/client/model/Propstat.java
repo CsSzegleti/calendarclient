@@ -1,39 +1,16 @@
 package com.cry0.calendarclient.business.client.model;
 
-import java.util.Map;
-
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "propstat")
 public class Propstat {
-    // @JacksonXmlProperty(localName = "status")
-    // private String status;
-
-    // @JacksonXmlProperty(localName = "getetag")
-    // private String getEtag;
-    
-    // @JacksonXmlProperty(localName = "displayName")
-    // private String displayName;
-
-    // @JacksonXmlProperty(localName = "calendar-color")
-    // private String calendarColor;
-
-    @JacksonXmlElementWrapper(localName = "prop")
-    Map<String, String> properties;
+    @JacksonXmlProperty(localName = "prop")
+    Prop prop;
 
     @JacksonXmlProperty(localName = "status")
     private String status;
-
-    public Map<String, String> getProperties() {
-        return properties;
-    }
-
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
-    }
 
     public String getStatus() {
         return status;
@@ -46,10 +23,16 @@ public class Propstat {
     public Propstat() {
     }
 
-    public Propstat(Map<String, String> properties, String status) {
-        this.properties = properties;
+    public Propstat(Prop prop, String status) {
+        this.prop = prop;
         this.status = status;
     }
 
-    
+    public void setProp(Prop prop) {
+        this.prop = prop;
+    }
+
+    public Prop getProp() {
+        return prop;
+    }
 }

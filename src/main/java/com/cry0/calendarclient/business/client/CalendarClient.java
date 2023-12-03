@@ -14,6 +14,7 @@ import com.cry0.calendarclient.business.client.model.Property;
 import com.cry0.calendarclient.business.client.model.PropertyFactory;
 import com.cry0.calendarclient.business.client.model.Propfind;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 @Component
 public class CalendarClient {
@@ -32,6 +33,7 @@ public class CalendarClient {
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_LAST_MODIFIED));
 
         XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.registerModule(new JavaTimeModule());
 
         String xml = xmlMapper.writeValueAsString(propfind);
 
