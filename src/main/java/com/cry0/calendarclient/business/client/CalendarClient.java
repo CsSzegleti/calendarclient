@@ -9,6 +9,7 @@ import java.net.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.cry0.calendarclient.business.client.model.Multistatus;
 import com.cry0.calendarclient.business.client.model.Property;
 import com.cry0.calendarclient.business.client.model.PropertyFactory;
 import com.cry0.calendarclient.business.client.model.Propfind;
@@ -20,13 +21,15 @@ public class CalendarClient {
     @Value("${caldav.base.url}")
     private String calendarBaseUrl;
 
-    public String getCalendarInfo(String user, String calendar) throws IOException, InterruptedException {
+    public Multistatus getCalendarInfo(String user, String calendar) throws IOException, InterruptedException {
 
         Propfind propfind = new Propfind();
 
         propfind.addProperty(PropertyFactory.createProperty(Property.DISPLAY_NAME));
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_ETAG));
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_CTAG));
+        propfind.addProperty(PropertyFactory.createProperty(Property.CALENDAR_COLOR));
+        propfind.addProperty(PropertyFactory.createProperty(Property.GET_LAST_MODIFIED));
 
         XmlMapper xmlMapper = new XmlMapper();
 
@@ -41,6 +44,8 @@ public class CalendarClient {
         HttpResponse<String> res = client.send(request,
         HttpResponse.BodyHandlers.ofString());
 
-        return res.body();
+        Multistatus result = xmlMapper.readValue(res.body(), Multistatus.class);
+
+        return result;
     }
 }
