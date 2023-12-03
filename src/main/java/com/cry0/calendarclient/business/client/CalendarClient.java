@@ -31,7 +31,8 @@ public class CalendarClient {
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_CTAG));
         propfind.addProperty(PropertyFactory.createProperty(Property.CALENDAR_COLOR));
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_LAST_MODIFIED));
-
+        propfind.addProperty(PropertyFactory.createProperty(Property.SUPPORTED_CALENDAR_COMPONENT_SET));
+        
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
 

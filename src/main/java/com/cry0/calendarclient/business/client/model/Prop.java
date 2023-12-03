@@ -1,33 +1,36 @@
 package com.cry0.calendarclient.business.client.model;
 
-import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 import com.cry0.calendarclient.business.client.utils.CustomDateDeserializer;
 import com.cry0.calendarclient.business.client.utils.CustomStringDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class Prop {
 
-    @JacksonXmlProperty(localName = "getetag")
+    @JacksonXmlProperty(localName = Property.GET_ETAG)
     @JsonDeserialize(using = CustomStringDeserializer.class)
     private String getEtag;
 
-    @JacksonXmlProperty(localName = "getctag")
+    @JacksonXmlProperty(localName = Property.GET_CTAG)
     @JsonDeserialize(using = CustomStringDeserializer.class)
     private String getCtag;
 
-    @JacksonXmlProperty(localName = "displayname")
+    @JacksonXmlProperty(localName = Property.DISPLAY_NAME)
     private String displayName;
 
-    @JacksonXmlProperty(localName = "calendar-color")
+    @JacksonXmlProperty(localName = Property.CALENDAR_COLOR)
     private String calendarColor;
 
-    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, dd MMM yyyy HH:mm:ss z")
-    @JacksonXmlProperty(localName = "getlastmodified")
+    @JacksonXmlProperty(localName = Property.GET_LAST_MODIFIED)
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private ZonedDateTime lastModified;
+
+    @JacksonXmlElementWrapper(localName = Property.SUPPORTED_CALENDAR_COMPONENT_SET)
+    private List<Comp> supportedComponents;
 
     public String getGetEtag() {
         return getEtag;
@@ -69,4 +72,13 @@ public class Prop {
         this.lastModified = lastModified;
     }
 
+    public List<Comp> getSupportedComponents() {
+        return supportedComponents;
+    }
+
+    public void setSupportedComponents(List<Comp> supportedComponents) {
+        this.supportedComponents = supportedComponents;
+    }
+
+    
 }
