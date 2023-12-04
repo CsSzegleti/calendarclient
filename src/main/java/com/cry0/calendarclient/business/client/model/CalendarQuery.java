@@ -3,6 +3,7 @@ package com.cry0.calendarclient.business.client.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -12,6 +13,7 @@ import com.cry0.calendarclient.business.client.model.filter.CompFilter;
 import com.cry0.calendarclient.business.client.model.filter.Filter;
 import com.cry0.calendarclient.business.client.model.properties.CalendarQueryProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @JacksonXmlRootElement(localName = PropertyName.CALENDAR_QUERY, namespace = "urn:ietf:params:xml:ns:caldav")
 public class CalendarQuery {
 

@@ -11,7 +11,10 @@ import org.springframework.stereotype.Component;
 
 import com.cry0.calendarclient.business.client.model.CalendarQuery;
 import com.cry0.calendarclient.business.client.model.Multistatus;
+import com.cry0.calendarclient.business.client.model.properties.CalendarQueryProperty;
+import com.cry0.calendarclient.business.client.model.properties.PropfindProperty;
 import com.cry0.calendarclient.business.client.model.request.Propfind;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -21,7 +24,7 @@ public class CalendarClient {
     @Value("${caldav.base.url}")
     private String calendarBaseUrl;
 
-    public Multistatus getCalendarInfo(String user, String calendar) throws IOException, InterruptedException {
+    public Multistatus<PropfindProperty> getCalendarInfo(String user, String calendar) throws IOException, InterruptedException {
 
         Propfind propfind = new Propfind();
 
@@ -34,7 +37,7 @@ public class CalendarClient {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(String.format("%s%s/%s/", calendarBaseUrl, user, calendar)))
                 .method(CalendarMethod.PROPFIND.name(),
-                        HttpRequest.BodyPublishers.ofString(xml))
+                        HttpRequest.BodyPublishers.noBody())
                 .build();
 
         System.out.println(xml);
@@ -42,12 +45,12 @@ public class CalendarClient {
         HttpResponse<String> res = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        Multistatus result = xmlMapper.readValue(res.body(), Multistatus.class);
+        Multistatus<PropfindProperty> result = xmlMapper.readValue(res.body(), new TypeReference<Multistatus<PropfindProperty>>() {});
 
         return result;
     }
 
-    public String getCalendarData(String user, String calendar) throws IOException, InterruptedException {
+    public Multistatus<CalendarQueryProperty> getCalendarData(String user, String calendar) throws IOException, InterruptedException {
         CalendarQuery calendarQuery = new CalendarQuery();
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
@@ -63,11 +66,9 @@ public class CalendarClient {
         HttpResponse<String> res = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        return res.body();
+        Multistatus<CalendarQueryProperty> result = xmlMapper.readValue(res.body(), new TypeReference<Multistatus<CalendarQueryProperty>>(){});
 
-        // Multistatus result = xmlMapper.readValue(res.body(), Multistatus.class);
-
-        // return result;
+        return result;
 
     }
 }

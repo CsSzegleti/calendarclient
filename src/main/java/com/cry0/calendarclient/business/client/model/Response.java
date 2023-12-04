@@ -7,26 +7,26 @@ import com.cry0.calendarclient.business.client.model.constant.PropertyName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-public class Response {
+public class Response<PropType> {
 
     @JacksonXmlProperty(localName = PropertyName.HREF, namespace = Namespace.DAV)
     private String href;
 
     @JacksonXmlElementWrapper(useWrapping = false)
-    private List<Propstat> propstat;
+    private List<Propstat<PropType>> propstat;
 
     public String getHref() {
         return href;
     }
 
-    public List<Propstat> getPropstat() {
+    public List<Propstat<PropType>> getPropstat() {
         return propstat;
     }
 
     public Response() {
     }
 
-    public Response(String href, List<Propstat> propstat) {
+    public Response(String href, List<Propstat<PropType>> propstat) {
         this.href = href;
         this.propstat = propstat;
     }
@@ -35,7 +35,7 @@ public class Response {
         this.href = href;
     }
 
-    public void setPropstat(List<Propstat> propstat) {
+    public void setPropstat(List<Propstat<PropType>> propstat) {
         this.propstat = propstat;
     }
 
