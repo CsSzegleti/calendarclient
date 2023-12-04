@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cry0.calendarclient.business.client.CalendarClient;
 import com.cry0.calendarclient.business.client.model.Multistatus;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.cry0.calendarclient.business.client.model.CalendarQuery;
 import com.cry0.calendarclient.business.client.model.Multistatus;
-import com.cry0.calendarclient.business.client.model.Property;
-import com.cry0.calendarclient.business.client.model.PropertyFactory;
-import com.cry0.calendarclient.business.client.model.Propfind;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.cry0.calendarclient.business.client.model.request.Propfind;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -28,17 +25,10 @@ public class CalendarClient {
 
         Propfind propfind = new Propfind();
 
-        propfind.addProperty(PropertyFactory.createProperty(Property.DISPLAY_NAME));
-        propfind.addProperty(PropertyFactory.createProperty(Property.GET_ETAG));
-        propfind.addProperty(PropertyFactory.createProperty(Property.GET_CTAG));
-        propfind.addProperty(PropertyFactory.createProperty(Property.CALENDAR_COLOR));
-        propfind.addProperty(PropertyFactory.createProperty(Property.GET_LAST_MODIFIED));
-        propfind.addProperty(PropertyFactory.createProperty(Property.SUPPORTED_CALENDAR_COMPONENT_SET));
-
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
 
-        String xml = xmlMapper.writeValueAsString(propfind);
+        String xml = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(propfind);
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -46,6 +36,8 @@ public class CalendarClient {
                 .method(CalendarMethod.PROPFIND.name(),
                         HttpRequest.BodyPublishers.ofString(xml))
                 .build();
+
+        System.out.println(xml);
 
         HttpResponse<String> res = client.send(request,
                 HttpResponse.BodyHandlers.ofString());

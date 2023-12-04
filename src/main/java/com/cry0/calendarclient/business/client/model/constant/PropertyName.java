@@ -1,6 +1,6 @@
-package com.cry0.calendarclient.business.client.model;
+package com.cry0.calendarclient.business.client.model.constant;
 
-public class Property<T> {
+public class PropertyName {
     public static final String PRINCIPAL_COLLECTION_SET = "principal-collection-set";
     public static final String CURRENT_USER_PRINCIPAL = "current-user-principal";
     public static final String CURRENT_USER_PRIVILEGE_SET = "current-user-privilege-set";
@@ -17,35 +17,16 @@ public class Property<T> {
     public static final String SYNC_TOKEN = "sync-token";
     public static final String SUPPORTED_CALENDAR_COMPONENT_SET = "supported-calendar-component-set";
     public static final String CALENDAR_COLOR = "calendar-color";
-
-    private String name;
-    private T value;
-    private String nameSpace;
+    public static final String CALENDAR_DATA = "calendar-data";
+    public static final String PROP = "prop";
+    public static final String PROPFIND = "propfind";
+    public static final String MULTISTATUS = "multistatus";
+    public static final String RESPONSE = "response";
+    public static final String NAME = "name";
+    public static final String CALENDAR_QUERY = "calendar-query";
+    public static final String STATUS = "status";
+    public static final String HREF = "href";
     
-    public Property() {
-    }
 
-    Property(String name, T value, String nameSpace) {
-        this.name = name;
-        this.value = value;
-        this.nameSpace = nameSpace;
-    }
-    
-    public String getName() {
-        return name;
-    }
 
-    public T getValue() {
-        return value;
-    }
-    public void setValue(T value) {
-        this.value = value;
-    }
-    public String getNameSpace() {
-        return nameSpace;
-    }
-    public void setNameSpace(String nameSpace) {
-        this.nameSpace = nameSpace;
-    }
-    
 }

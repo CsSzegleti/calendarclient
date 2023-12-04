@@ -1,51 +1,42 @@
-package com.cry0.calendarclient.business.client.model;
+package com.cry0.calendarclient.business.client.model.properties;
 
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.cry0.calendarclient.business.client.model.Comp;
+import com.cry0.calendarclient.business.client.model.constant.Namespace;
+import com.cry0.calendarclient.business.client.model.constant.PropertyName;
 import com.cry0.calendarclient.business.client.utils.CustomDateDeserializer;
 import com.cry0.calendarclient.business.client.utils.CustomStringDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-public class Prop {
+public class PropfindProperty {
 
-    @JacksonXmlProperty(localName = Property.GET_ETAG)
+    @JacksonXmlProperty(localName = PropertyName.GET_CTAG, namespace = Namespace.CS)
     @JsonDeserialize(using = CustomStringDeserializer.class)
-    private String getEtag;
+    private String ctag;
 
-    @JacksonXmlProperty(localName = Property.GET_CTAG)
-    @JsonDeserialize(using = CustomStringDeserializer.class)
-    private String getCtag;
-
-    @JacksonXmlProperty(localName = Property.DISPLAY_NAME)
+    @JacksonXmlProperty(localName = PropertyName.DISPLAY_NAME, namespace = Namespace.DAV)
     private String displayName;
 
-    @JacksonXmlProperty(localName = Property.CALENDAR_COLOR)
+    @JacksonXmlProperty(localName = PropertyName.CALENDAR_COLOR, namespace = Namespace.ICAL)
     private String calendarColor;
 
-    @JacksonXmlProperty(localName = Property.GET_LAST_MODIFIED)
+    @JacksonXmlProperty(localName = PropertyName.GET_LAST_MODIFIED, namespace = Namespace.DAV)
     @JsonDeserialize(using = CustomDateDeserializer.class)
     private ZonedDateTime lastModified;
 
-    @JacksonXmlElementWrapper(localName = Property.SUPPORTED_CALENDAR_COMPONENT_SET)
+    @JacksonXmlElementWrapper(localName = PropertyName.SUPPORTED_CALENDAR_COMPONENT_SET, namespace = Namespace.C)
     private List<Comp> supportedComponents;
 
-    public String getGetEtag() {
-        return getEtag;
+    public String getCtag() {
+        return ctag;
     }
 
-    public void setGetEtag(String getEtag) {
-        this.getEtag = getEtag;
-    }
-
-    public String getGetCtag() {
-        return getCtag;
-    }
-
-    public void setGetCtag(String getCtag) {
-        this.getCtag = getCtag;
+    public void setCtag(String ctag) {
+        this.ctag = ctag;
     }
 
     public String getDisplayName() {
@@ -80,5 +71,4 @@ public class Prop {
         this.supportedComponents = supportedComponents;
     }
 
-    
 }

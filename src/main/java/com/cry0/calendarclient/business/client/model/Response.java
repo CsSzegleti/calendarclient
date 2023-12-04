@@ -2,12 +2,14 @@ package com.cry0.calendarclient.business.client.model;
 
 import java.util.List;
 
+import com.cry0.calendarclient.business.client.model.constant.Namespace;
+import com.cry0.calendarclient.business.client.model.constant.PropertyName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class Response {
 
-    @JacksonXmlProperty(localName = "href")
+    @JacksonXmlProperty(localName = PropertyName.HREF, namespace = Namespace.DAV)
     private String href;
 
     @JacksonXmlElementWrapper(useWrapping = false)
