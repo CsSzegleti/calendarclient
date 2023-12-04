@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cry0.calendarclient.business.client.CalendarClient;
 import com.cry0.calendarclient.business.client.model.Multistatus;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,11 @@ public class CalendarController {
     @GetMapping("/getCalendarInfo/{userName}/{calendarId}")
     public Multistatus getCalendarInfo(@PathVariable String userName, @PathVariable String calendarId) throws IOException, InterruptedException {
         return client.getCalendarInfo(userName, calendarId);
+    }
+
+    @GetMapping("/getCalendarElements/{userName}/{calendarId}")
+    public String getCalendarElements(@PathVariable String userName, @PathVariable String calendarId) throws IOException, InterruptedException {
+        return client.getCalendarData(userName, calendarId);
     }
     
 }

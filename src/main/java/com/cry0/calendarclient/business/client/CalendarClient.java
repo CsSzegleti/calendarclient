@@ -9,10 +9,12 @@ import java.net.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.cry0.calendarclient.business.client.model.CalendarQuery;
 import com.cry0.calendarclient.business.client.model.Multistatus;
 import com.cry0.calendarclient.business.client.model.Property;
 import com.cry0.calendarclient.business.client.model.PropertyFactory;
 import com.cry0.calendarclient.business.client.model.Propfind;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -32,7 +34,7 @@ public class CalendarClient {
         propfind.addProperty(PropertyFactory.createProperty(Property.CALENDAR_COLOR));
         propfind.addProperty(PropertyFactory.createProperty(Property.GET_LAST_MODIFIED));
         propfind.addProperty(PropertyFactory.createProperty(Property.SUPPORTED_CALENDAR_COMPONENT_SET));
-        
+
         XmlMapper xmlMapper = new XmlMapper();
         xmlMapper.registerModule(new JavaTimeModule());
 
@@ -40,15 +42,40 @@ public class CalendarClient {
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-        .uri(URI.create(String.format("%s%s/%s/", calendarBaseUrl, user, calendar)))
-        .method(CalendarMethod.PROPFIND.name(),
-        HttpRequest.BodyPublishers.ofString(xml)).build();
+                .uri(URI.create(String.format("%s%s/%s/", calendarBaseUrl, user, calendar)))
+                .method(CalendarMethod.PROPFIND.name(),
+                        HttpRequest.BodyPublishers.ofString(xml))
+                .build();
 
         HttpResponse<String> res = client.send(request,
-        HttpResponse.BodyHandlers.ofString());
+                HttpResponse.BodyHandlers.ofString());
 
         Multistatus result = xmlMapper.readValue(res.body(), Multistatus.class);
 
         return result;
+    }
+
+    public String getCalendarData(String user, String calendar) throws IOException, InterruptedException {
+        CalendarQuery calendarQuery = new CalendarQuery();
+        XmlMapper xmlMapper = new XmlMapper();
+        xmlMapper.registerModule(new JavaTimeModule());
+        String xml = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(calendarQuery);
+
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(String.format("%s%s/%s/", calendarBaseUrl, user, calendar)))
+                .method(CalendarMethod.REPORT.name(),
+                        HttpRequest.BodyPublishers.ofString(xml))
+                .build();
+
+        HttpResponse<String> res = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return res.body();
+
+        // Multistatus result = xmlMapper.readValue(res.body(), Multistatus.class);
+
+        // return result;
+
     }
 }
