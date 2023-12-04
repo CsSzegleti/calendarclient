@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cry0.calendarclient.business.client.CalendarClient;
-import com.cry0.calendarclient.business.client.model.CalendarQuery;
 import com.cry0.calendarclient.business.client.model.Multistatus;
 import com.cry0.calendarclient.business.client.model.properties.CalendarQueryProperty;
 import com.cry0.calendarclient.business.client.model.properties.PropfindProperty;
